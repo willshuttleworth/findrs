@@ -1,3 +1,5 @@
+extern crate clap;
+
 use std::fs;
 use clap::Parser;
 
