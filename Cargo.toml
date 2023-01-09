@@ -1,9 +1,12 @@
 [package]
 name = "myfind"
 version = "0.1.0"
-edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+authors = ["Will Shuttleworth <wps20@pitt.edu>"]
+license = "MIT"
+description = "Like the `find` util, but useless"
+readme = "README.md"
+keywords = ["cli", "find", "practice"]
+categories = ["command-line-utilities"]
 
 [dependencies]
 clap = { version = "4.0.32", features = ["derive"] }
