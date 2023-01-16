@@ -6,6 +6,10 @@ wanted to try to make a cli with rust, so i "remade" find
 
 ### usage
 
-`myfind <target> <path>`, where target is the file or directory you are searching for, and path is the root path you would like to search within
+* `myfind [OPTIONS] <path>`, path is the root path you would like to search within
 
+##### options
+
+* `-f, --file <FILE>`: file or directory to search for
+* `-e, --extension <EXT>`: search for files of a specific extension
 
