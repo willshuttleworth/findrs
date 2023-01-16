@@ -3,10 +3,15 @@ extern crate clap;
 use std::fs;
 use clap::Parser;
 
+#[derive(Debug)]
 #[derive(Parser)]
 struct Find {
+    //look for file extension
+    #[arg(short, long, value_name = "EXTENSION", help = "search for all files with a given extension.\nenter file extension without the '.', for example a plain text file as 'txt'")]
+    extension: Option<String>,
     //dir to look for
-    dir: std::path::PathBuf,
+    #[arg(short, long, value_name = "FILE", help = "search for files or directories with given name")]
+    file: Option<std::path::PathBuf>,
     //path to look within
     path: std::path::PathBuf,
 }
@@ -33,10 +38,28 @@ fn children(path: &std::path::PathBuf, target: &std::path::PathBuf)  {
             }
         }
     }
-   
+}
+
+fn extensions(path: &std::path::PathBuf, ext: &str) {
+    println!("finding all files of type {} in {}", ext, path.display());
 }
 
 fn main() {
     let args = Find::parse();
-    children(&args.path, &args.dir);
+    match args.file {
+        //verify that extension is None, if it is also Some then return error
+        Some(file) => {
+            match args.extension {
+                Some(_) => 
+                    panic!("both file and extension provided, please provide one but not both"),
+                None => children(&args.path, &file),
+            }
+        },
+        None => {
+            match args.extension {
+                Some(ext) => extensions(&args.path, &ext),
+                None => panic!("no args given"),
+            }
+        },
+    }
 }
