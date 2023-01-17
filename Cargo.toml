@@ -1,6 +1,6 @@
 [package]
 name = "myfind"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Will Shuttleworth <wps20@pitt.edu>"]
 homepage = "https://github.com/willshuttleworth/myfind"
 repository = "https://github.com/willshuttleworth/myfind"
