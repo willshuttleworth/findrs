@@ -2,6 +2,8 @@
 name = "myfind"
 version = "0.1.2"
 authors = ["Will Shuttleworth <wps20@pitt.edu>"]
+homepage = "https://github.com/willshuttleworth/myfind"
+repository = "https://github.com/willshuttleworth/myfind"
 license = "MIT"
 description = "Like the `find` util, but useless"
 readme = "README.md"
