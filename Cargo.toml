@@ -1,6 +1,6 @@
 [package]
 name = "myfind"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Will Shuttleworth <wps20@pitt.edu>"]
 license = "MIT"
 description = "Like the `find` util, but useless"
