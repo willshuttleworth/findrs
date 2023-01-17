@@ -3,8 +3,8 @@ extern crate clap;
 use std::fs;
 use clap::Parser;
 
-#[derive(Debug)]
 #[derive(Parser)]
+#[command(version)]
 struct Find {
     //look for file extension
     #[arg(short, long, value_name = "EXTENSION", help = "search for all files with a given extension.\nenter file extension without the '.', for example a plain text file as 'txt'")]
@@ -17,7 +17,6 @@ struct Find {
 }
 
 fn children(path: &std::path::PathBuf, target: &std::path::PathBuf)  {
-   // get all children, iterate over each one and call children function, and print name of dir 
     let dirs = match fs::read_dir(path) {
         Ok(dirs) => dirs,
         Err(_) => return,
@@ -41,7 +40,6 @@ fn children(path: &std::path::PathBuf, target: &std::path::PathBuf)  {
 }
 
 fn extensions(path: &std::path::PathBuf, ext: &str) {
-   // get all children, iterate over each one and call children function, and print name of dir 
     let dirs = match fs::read_dir(path) {
         Ok(dirs) => dirs,
         Err(_) => return,
@@ -61,9 +59,6 @@ fn extensions(path: &std::path::PathBuf, ext: &str) {
                 },
                 None => (),
             }
-            //if file.eq(&target.display().to_string()) {
-                //println!("{} found in {}", target.display().to_string(), line);
-            //}
             let lib = "Library";
             if !file.eq(&lib) {
                 extensions(&dir.path(), ext);
@@ -74,6 +69,8 @@ fn extensions(path: &std::path::PathBuf, ext: &str) {
 
 fn main() {
     let args = Find::parse();
+
+    //do finding operation
     match args.file {
         //verify that extension is None, if it is also Some then return error
         Some(file) => {

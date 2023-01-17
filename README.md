@@ -12,4 +12,5 @@ wanted to try to make a cli with rust, so i "remade" find
 
 * `-f, --file <FILE>`: file or directory to search for
 * `-e, --extension <EXT>`: search for files of a specific extension
+* `-V, --version`: show version info
 
