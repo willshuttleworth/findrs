@@ -41,7 +41,35 @@ fn children(path: &std::path::PathBuf, target: &std::path::PathBuf)  {
 }
 
 fn extensions(path: &std::path::PathBuf, ext: &str) {
-    println!("finding all files of type {} in {}", ext, path.display());
+   // get all children, iterate over each one and call children function, and print name of dir 
+    let dirs = match fs::read_dir(path) {
+        Ok(dirs) => dirs,
+        Err(_) => return,
+   };
+
+    for file in dirs {
+        if let Ok(dir) = file {
+            let line = dir.path().display().to_string();
+            let files: Vec<&str> = line.split("/").collect();
+            let file = files.get(files.len() - 1).unwrap();
+            let extension = &file.split('.').nth(1);
+            match extension {
+                Some(extension) => {
+                    if extension.eq(&ext) {
+                        println!("{} found in {}", file, line);
+                    }
+                },
+                None => (),
+            }
+            //if file.eq(&target.display().to_string()) {
+                //println!("{} found in {}", target.display().to_string(), line);
+            //}
+            let lib = "Library";
+            if !file.eq(&lib) {
+                extensions(&dir.path(), ext);
+            }
+        }
+    }
 }
 
 fn main() {
