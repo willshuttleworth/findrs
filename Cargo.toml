@@ -1,5 +1,6 @@
 [package]
 name = "myfind"
+description = "like the find util, but worse"
 version = "0.1.4"
 authors = ["Will Shuttleworth <wps20@pitt.edu>"]
 homepage = "https://github.com/willshuttleworth/myfind"
