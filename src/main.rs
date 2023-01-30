@@ -1,8 +1,10 @@
 extern crate clap;
+extern crate jwalk;
 
 use std::fs;
 use std::path::Path;
 use clap::Parser;
+use jwalk::WalkDir;
 
 #[derive(Parser)]
 #[command(version)]
@@ -24,81 +26,43 @@ struct Find {
 }
 
 fn children(path: &std::path::PathBuf, target: &std::path::PathBuf)  {
-    let dirs = match fs::read_dir(path) {
-        Ok(dirs) => dirs,
-        Err(_) => return,
-   };
-
-    for file in dirs {
-        if let Ok(dir) = file {
-            let line = dir.path().display().to_string();
-            let files: Vec<&str> = line.split("/").collect();
-            let file = files.get(files.len() - 1).unwrap();
-            //println!("{}", line);
-            if file.eq(&target.display().to_string()) {
-                println!("{} found in {}", target.display().to_string(), line);
-            }
-            //ignore these macOS directories because they are too big and probably have no user
-            //created files
-            if !file.eq(&"Library") && !file.eq(&"System") && !file.eq(&"Volumes"){
-                children(&dir.path(), target);
-            }
+    for file in WalkDir::new(path) {
+        let line = file.unwrap().path().display().to_string();
+        let files: Vec<&str> = line.split("/").collect();
+        let f = files.get(files.len() - 1).unwrap();
+        if f.eq(&target.display().to_string()) {
+            println!("{}", line);
         }
     }
 }
 
 fn extensions(path: &std::path::PathBuf, ext: &str) {
-    let dirs = match fs::read_dir(path) {
-        Ok(dirs) => dirs,
-        Err(_) => return,
-   };
-
-    for file in dirs {
-        if let Ok(dir) = file {
-            let line = dir.path().display().to_string();
-            let files: Vec<&str> = line.split("/").collect();
-            let file = files.get(files.len() - 1).unwrap();
-            let extension = &file.split('.').nth(1);
-            match extension {
-                Some(extension) => {
-                    if extension.eq(&ext) {
-                        println!("{} found in {}", file, line);
-                    }
-                },
-                None => (),
-            }
-            let lib = "Library";
-            if !file.eq(&lib) {
-                extensions(&dir.path(), ext);
-            }
+    for file in WalkDir::new(path) {
+        let line = file.as_ref().unwrap().path().display().to_string();
+        let files: Vec<&str> = line.split("/").collect();
+        let f = files.get(files.len() - 1).unwrap();
+        let extension = &f.split('.').nth(1);
+        match extension {
+            Some(extension) => {
+                if extension.eq(&ext) {
+                    println!("{}", line);
+                }
+            },
+            None => (),
         }
     }
 }
 
 fn empty(path: &std::path::PathBuf) {
-    let dirs = match fs::read_dir(path) {
-        Ok(dirs) => dirs,
-        Err(_) => return,
-   };
-
-    for file in dirs {
-        if let Ok(dir) = file {
-            let line = dir.path().display().to_string();
-            let files: Vec<&str> = line.split("/").collect();
-            let file = files.get(files.len() - 1).unwrap();
-            if Path::new(&line).is_dir() {
-                let subdirs = match fs::read_dir(&dir.path()) {
-                    Ok(dirs) => dirs,
-                    Err(_) => return,
-                };
-                if subdirs.count() == 0 {
-                    println!("empty dir found at {}", line);
-                }
-            }
-            //ignore these macOS directories because they are too big and probably have no user
-            //created files
-            if !file.eq(&"Library") && !file.eq(&"System") && !file.eq(&"Volumes"){
-                empty(&dir.path());
+    for file in WalkDir::new(path) {
+        let line = file.as_ref().unwrap().path().display().to_string();
+        if Path::new(&line).is_dir() {
+            let subdirs = match fs::read_dir(&file.unwrap().path()) {
+                Ok(dirs) => dirs,
+                Err(_) => return,
+            };
+            if subdirs.count() == 0 {
+                println!("{}", line);
             }
         }
     }

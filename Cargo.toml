@@ -1,6 +1,6 @@
 [package]
 name = "myfind"
-description = "like the find util, but worse"
+description = "a simpler and faster find util"
 version = "0.1.4"
 authors = ["Will Shuttleworth <wps20@pitt.edu>"]
 homepage = "https://github.com/willshuttleworth/myfind"
@@ -12,3 +12,4 @@ categories = ["command-line-utilities"]
 
 [dependencies]
 clap = { version = "4.0.32", features = ["derive"] }
+jwalk = "0.8.1"
