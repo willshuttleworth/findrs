@@ -15,3 +15,7 @@ wanted to try to make a cli with rust, so i "remade" find
 * `-f, --file <FILE>`: file or directory to search for
 * `-V, --version`: show version info
 
+### performance vs `find`
+
+![](img/benchmark1.png)
+![](img/benchmark2.png)
