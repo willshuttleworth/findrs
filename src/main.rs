@@ -27,44 +27,60 @@ struct Find {
 
 fn children(path: &std::path::PathBuf, target: &std::path::PathBuf)  {
     for file in WalkDir::new(path) {
-        let line = file.unwrap().path().display().to_string();
-        let files: Vec<&str> = line.split("/").collect();
-        let f = files.get(files.len() - 1).unwrap();
-        if f.eq(&target.display().to_string()) {
-            println!("{}", line);
+        match file.as_ref() {
+            Ok(string) => {
+                let line = &string.path().display().to_string();
+                let files: Vec<&str> = line.split("/").collect();
+                let f = files.get(files.len() - 1).unwrap();
+                if f.eq(&target.display().to_string()) {
+                    println!("{}", line);
+                }
+            },
+            Err(_) => continue,
         }
     }
 }
 
 fn extensions(path: &std::path::PathBuf, ext: &str) {
     for file in WalkDir::new(path) {
-        let line = file.as_ref().unwrap().path().display().to_string();
-        let files: Vec<&str> = line.split("/").collect();
-        let f = files.get(files.len() - 1).unwrap();
-        let extension = &f.split('.').nth(1);
-        match extension {
-            Some(extension) => {
-                if extension.eq(&ext) {
-                    println!("{}", line);
+        match file.as_ref() {
+            Ok(string) => {
+                let line = &string.path().display().to_string();
+                let files: Vec<&str> = line.split("/").collect();
+                let f = files.get(files.len() - 1).unwrap();
+                let extension = &f.split('.').nth(1);
+                match extension {
+                    Some(extension) => {
+                        if extension.eq(&ext) {
+                            println!("{}", line);
+                        }
+                    },
+                    None => continue,
                 }
             },
-            None => (),
+            Err(_) => continue,
         }
     }
 }
 
 fn empty(path: &std::path::PathBuf) {
     for file in WalkDir::new(path) {
-        let line = file.as_ref().unwrap().path().display().to_string();
-        if Path::new(&line).is_dir() {
-            let subdirs = match fs::read_dir(&file.unwrap().path()) {
-                Ok(dirs) => dirs,
-                Err(_) => return,
-            };
-            if subdirs.count() == 0 {
-                println!("{}", line);
-            }
-        }
+        match file.as_ref() {
+            Ok(string) => {
+                let line = &string.path().display().to_string();
+                if Path::new(&line).is_dir() {
+                    match fs::read_dir(&file.unwrap().path()) {
+                        Ok(dirs) => {
+                            if dirs.count() == 0 {
+                                println!("{}", line);
+                            }
+                        },
+                        Err(_) => continue,
+                    };
+                }
+            },
+            Err(_) => continue,
+        };
     }
 }
 
