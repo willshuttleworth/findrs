@@ -4,6 +4,10 @@
 
 wanted to try to make a cli with rust, so i "remade" find 
 
+### installation
+
+* with cargo: `cargo install myfind'
+
 ### usage
 
 * `myfind [OPTIONS] <path>`, path is the root path you would like to search within
