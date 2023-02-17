@@ -1,5 +1,5 @@
 [package]
-name = "myfind"
+name = "rfind"
 description = "a simpler and faster find util"
 version = "0.2.0"
 authors = ["Will Shuttleworth <wps20@pitt.edu>"]
