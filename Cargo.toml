@@ -1,13 +1,13 @@
 [package]
 name = "rfind"
 description = "a simpler and faster find util"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Will Shuttleworth <wps20@pitt.edu>"]
 homepage = "https://github.com/willshuttleworth/myfind"
 repository = "https://github.com/willshuttleworth/myfind"
 license = "MIT"
 readme = "README.md"
-keywords = ["cli", "find", "practice"]
+keywords = ["cli", "find"]
 categories = ["command-line-utilities"]
 
 [dependencies]

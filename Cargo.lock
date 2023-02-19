@@ -226,14 +226,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "myfind"
-version = "0.1.4"
-dependencies = [
- "clap",
- "jwalk",
-]
-
-[[package]]
 name = "num_cpus"
 version = "1.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -317,6 +309,14 @@ dependencies = [
  "crossbeam-deque",
  "crossbeam-utils",
  "num_cpus",
+]
+
+[[package]]
+name = "rfind"
+version = "0.2.0"
+dependencies = [
+ "clap",
+ "jwalk",
 ]
 
 [[package]]
