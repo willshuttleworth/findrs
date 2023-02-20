@@ -1,10 +1,10 @@
 [package]
-name = "rfind"
+name = "findr"
 description = "a simpler and faster find util"
 version = "0.2.1"
 authors = ["Will Shuttleworth <wps20@pitt.edu>"]
-homepage = "https://github.com/willshuttleworth/myfind"
-repository = "https://github.com/willshuttleworth/myfind"
+homepage = "https://github.com/willshuttleworth/findr"
+repository = "https://github.com/willshuttleworth/findr"
 license = "MIT"
 readme = "README.md"
 keywords = ["cli", "find"]

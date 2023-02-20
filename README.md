@@ -1,4 +1,4 @@
-# myfind
+# findr
 
 ### like linux `find`, but faster and simpler
 
@@ -6,11 +6,11 @@ wanted to try to make a cli with rust, so i "remade" find
 
 ### installation
 
-* with cargo: `cargo install myfind`
+* with cargo: `cargo install findr`
 
 ### usage
 
-* `myfind [OPTIONS] <path>`, path is the root path you would like to search within
+* `findr [OPTIONS] <path>`, path is the root path you would like to search within
 
 ##### options
 
