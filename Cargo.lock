@@ -158,14 +158,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "findr"
-version = "0.2.1"
-dependencies = [
- "clap",
- "jwalk",
-]
-
-[[package]]
 name = "heck"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -317,6 +309,14 @@ dependencies = [
  "crossbeam-deque",
  "crossbeam-utils",
  "num_cpus",
+]
+
+[[package]]
+name = "rsfind"
+version = "0.2.1"
+dependencies = [
+ "clap",
+ "jwalk",
 ]
 
 [[package]]
