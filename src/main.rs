@@ -76,7 +76,7 @@ fn empty(path: &std::path::PathBuf) {
                             }
                         },
                         Err(_) => continue,
-                    };
+                    }
                 }
             },
             Err(_) => continue,
