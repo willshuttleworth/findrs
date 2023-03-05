@@ -1,7 +1,7 @@
 [package]
 name = "rsfind"
 description = "a simpler and faster find util"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["Will Shuttleworth <wps20@pitt.edu>"]
 homepage = "https://github.com/willshuttleworth/rsfind"
 repository = "https://github.com/willshuttleworth/rsfind"
