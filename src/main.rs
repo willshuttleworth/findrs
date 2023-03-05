@@ -26,7 +26,7 @@ struct Find {
 }
 
 fn children(path: &std::path::PathBuf, target: &std::path::PathBuf)  {
-    for file in WalkDir::new(path) {
+    for file in WalkDir::new(path).skip_hidden(false) {
         match file.as_ref() {
             Ok(string) => {
                 let line = &string.path().display().to_string();
@@ -42,7 +42,7 @@ fn children(path: &std::path::PathBuf, target: &std::path::PathBuf)  {
 }
 
 fn extensions(path: &std::path::PathBuf, ext: &str) {
-    for file in WalkDir::new(path) {
+    for file in WalkDir::new(path).skip_hidden(false) {
         match file.as_ref() {
             Ok(string) => {
                 let line = &string.path().display().to_string();
@@ -64,7 +64,7 @@ fn extensions(path: &std::path::PathBuf, ext: &str) {
 }
 
 fn empty(path: &std::path::PathBuf) {
-    for file in WalkDir::new(path) {
+    for file in WalkDir::new(path).skip_hidden(false) {
         match file.as_ref() {
             Ok(string) => {
                 let line = &string.path().display().to_string();
