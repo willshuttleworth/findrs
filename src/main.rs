@@ -13,6 +13,9 @@ struct Find {
     #[arg(long, value_name = "EMPTY", help = "find all empty directories in given path")]
     empty: bool,
 
+    #[arg(long, value_name = "HIDDEN", help = "search with hidden directories")]
+    hidden: bool,
+
     //look for file extension
     #[arg(short, long, value_name = "EXTENSION", help = "search for all files with a given extension.\nenter file extension without the '.', for example a plain text file as 'txt'")]
     extension: Option<String>,
@@ -25,8 +28,8 @@ struct Find {
     path: std::path::PathBuf,
 }
 
-fn children(path: &std::path::PathBuf, target: &std::path::PathBuf)  {
-    for file in WalkDir::new(path).skip_hidden(false) {
+fn children(path: &std::path::PathBuf, target: &std::path::PathBuf, hidden: bool)  {
+    for file in WalkDir::new(path).skip_hidden(!hidden) {
         match file.as_ref() {
             Ok(string) => {
                 let line = &string.path().display().to_string();
@@ -41,8 +44,8 @@ fn children(path: &std::path::PathBuf, target: &std::path::PathBuf)  {
     }
 }
 
-fn extensions(path: &std::path::PathBuf, ext: &str) {
-    for file in WalkDir::new(path).skip_hidden(false) {
+fn extensions(path: &std::path::PathBuf, ext: &str, hidden: bool) {
+    for file in WalkDir::new(path).skip_hidden(!hidden) {
         match file.as_ref() {
             Ok(string) => {
                 let line = &string.path().display().to_string();
@@ -63,8 +66,8 @@ fn extensions(path: &std::path::PathBuf, ext: &str) {
     }
 }
 
-fn empty(path: &std::path::PathBuf) {
-    for file in WalkDir::new(path).skip_hidden(false) {
+fn empty(path: &std::path::PathBuf, hidden: bool) {
+    for file in WalkDir::new(path).skip_hidden(!hidden) {
         match file.as_ref() {
             Ok(string) => {
                 let line = &string.path().display().to_string();
@@ -88,7 +91,7 @@ fn main() {
     let args = Find::parse();
 
     if args.empty {
-        empty(&args.path);
+        empty(&args.path, args.hidden);
     } else {
         match args.file {
             //verify that extension is None, if it is also Some then return error
@@ -96,12 +99,12 @@ fn main() {
                 match args.extension {
                     Some(_) => 
                         panic!("both file and extension provided, please provide one but not both"),
-                    None => children(&args.path, &file),
+                    None => children(&args.path, &file, args.hidden),
                 }
             },
             None => {
                 match args.extension {
-                    Some(ext) => extensions(&args.path, &ext),
+                    Some(ext) => extensions(&args.path, &ext, args.hidden),
                     None => panic!("no args given"),
                 }
             },

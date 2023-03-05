@@ -15,9 +15,11 @@ wanted to try to make a cli with rust, so i "remade" find
 ##### options
 
 * `-e, --extension <EXT>`: search for files of a specific extension
+* `--hidden`: search within hidden directories
 * `--empty`: search for empty directories
 * `-f, --file <FILE>`: file or directory to search for
 * `-V, --version`: show version info
+* `-h, --help`: show help info
 
 ### performance vs `find`
 
