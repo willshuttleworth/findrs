@@ -2,7 +2,7 @@
 
 ### like linux `find`, but faster and simpler
 
-wanted to try to make a cli with rust, so i "remade" find 
+wanted to try to make a cli with rust, so i 'remade' find 
 
 ### installation
 
