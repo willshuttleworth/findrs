@@ -1,4 +1,4 @@
-# rsfind 
+# findrs
 
 ### like linux `find`, but faster and simpler
 
@@ -6,7 +6,7 @@ wanted to try to make a cli with rust, so i 'remade' find
 
 ### installation
 
-* with cargo: `cargo install rsfind`
+* with cargo: `cargo install findrs`
 
 ### usage
 
