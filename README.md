@@ -24,3 +24,4 @@ wanted to try to make a cli with rust, so i 'remade' find
 ### performance vs `find`
 
 ![](img/benchmark.png)
+![](img/benchmark2.png)
