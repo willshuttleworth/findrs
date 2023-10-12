@@ -110,63 +110,35 @@ fn extensions(path: &std::path::PathBuf, ext: &str, hidden: bool) {
     }
 }
 
-fn empty(path: &std::path::PathBuf, hidden: bool, fuzzy: bool) {
-    for file in WalkDir::new(path).skip_hidden(!hidden) {
-        match file.as_ref() {
-            Ok(string) => {
-                let line = &string.path().display().to_string();
-                if Path::new(&line).is_dir() {
-                    match fs::read_dir(&file.unwrap().path()) {
-                        Ok(dirs) => {
-                            if dirs.count() == 0 {
-                                println!("{}", line);
-                            }
-                        },
-                        Err(_) => continue,
-                    }
-                }
-            },
-            Err(_) => continue,
-        };
-    }
-}
-
 fn main() {
     let args = Find::parse();
     let mut results: Vec<(u32, usize, String)> = Vec::new();
-    /*
-    if args.empty {
-        empty(&args.path, args.hidden, args.fuzzy);
-    } 
-    */
-    //else {
-        match args.file {
-            //verify that extension is None, if it is also Some then return error
-            Some(file) => {
-                match args.extension {
-                    Some(_) => 
-                        panic!("both file and extension provided, please provide one but not both"),
-                    None => { 
-                        children(&args.path, &file, args.hidden, args.fuzzy, &mut results);
-                        if args.fuzzy {
-                            //sort results by first param in tuple     
-                            results.sort_by_key(|k| (!k.0, k.1));
-                            //print top n (10 for now) results
-                            let mut i = 0;
-                            while i < 10 {
-                                println!("{}", results[i].2);
-                                i += 1;
-                            }
+    match args.file {
+        //verify that extension is None, if it is also Some then return error
+        Some(file) => {
+            match args.extension {
+                Some(_) => 
+                    panic!("both file and extension provided, please provide one but not both"),
+                None => { 
+                    children(&args.path, &file, args.hidden, args.fuzzy, &mut results);
+                    if args.fuzzy {
+                        //sort results by first param in tuple     
+                        results.sort_by_key(|k| (!k.0, k.1));
+                        //print top n (10 for now) results
+                        let mut i = 0;
+                        while i < 10 {
+                            println!("{}", results[i].2);
+                            i += 1;
                         }
-                    },
-                }
-            },
-            None => {
-                match args.extension {
-                    Some(ext) => extensions(&args.path, &ext, args.hidden),
-                    None => panic!("no args given"),
-                }
-            },
-        }
-    //}
+                    }
+                },
+            }
+        },
+        None => {
+            match args.extension {
+                Some(ext) => extensions(&args.path, &ext, args.hidden),
+                None => panic!("no args given"),
+            }
+        },
+    }
 }
