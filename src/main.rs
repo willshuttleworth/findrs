@@ -1,15 +1,11 @@
 extern crate clap;
 extern crate jwalk;
 
-use std::fs;
-use std::path::Path;
 use std::cmp::max;
 use clap::Parser;
 use jwalk::WalkDir;
 
-//TODO: 
-// add fuzzy finding to the empty function
-// publish v0.3.0
+//TODO: option to skip specified dirs
 
 #[derive(Parser)]
 #[command(version)]
