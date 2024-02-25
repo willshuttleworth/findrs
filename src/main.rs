@@ -35,14 +35,11 @@ struct Find {
 }
 
 fn lcs(a: &String, b: &&str) -> u32 {
-    let a_slice = a.as_bytes();
-    let b_slice = b.as_bytes();
-    let m = a.len();
-    let n = b.len();
+    let (a_slice, b_slice) = (a.as_bytes(), b.as_bytes());
+    let (m, n) = (a.len(), b.len());
     let mut arr = vec![vec![0u32 ; n + 1] ; m + 1];
+    let (mut i, mut j) = (1, 1);
 
-    let mut i = 1;
-    let mut j = 1;
     while i <= m {
         while j <=  n {
             if a_slice[i - 1] == b_slice[j - 1] {
@@ -56,7 +53,6 @@ fn lcs(a: &String, b: &&str) -> u32 {
         i += 1;
         j = 1;
     }
-
     arr[m][n]
 }
 
