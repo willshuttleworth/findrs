@@ -117,10 +117,8 @@ fn main() {
                         //sort results by first param in tuple     
                         results.sort_by_key(|k| (!k.0, k.1));
                         //print top n (10 for now) results
-                        let mut i = 0;
-                        while i < 10 {
+                        for i in 0..10 {
                             println!("{}", results[i].2);
-                            i += 1;
                         }
                     }
                 },
