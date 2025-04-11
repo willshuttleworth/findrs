@@ -10,7 +10,7 @@ wanted to try to make a cli with rust, so i 'remade' find
 
 ### usage
 
-* `rsfind [OPTIONS] <path>`, path is the root path you would like to search within
+* `findrs [OPTIONS] <path>`, path is the root path you would like to search within
 
 ##### options
 
