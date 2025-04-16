@@ -114,7 +114,7 @@ fn extensions(path: &std::path::PathBuf, ext: &str, hidden: bool) {
                 let line = &string.path().display().to_string();
                 let files: Vec<&str> = line.split("/").collect();
                 let f = files.last().unwrap();
-                let extension = &f.split('.').nth(1);
+                let extension = &f.split('.').last();
                 match extension {
                     Some(extension) => {
                         if extension.eq(&ext) {
