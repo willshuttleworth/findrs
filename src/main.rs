@@ -31,9 +31,11 @@ struct Find {
     #[arg(
         long,
         value_name = "FUZZY",
-        help = "do a fuzzy find. the ten closest results will be displayed"
+        help = "do a fuzzy find. the ten closest results will be displayed",
+        num_args(0..=1),
+        default_missing_value = "10"
     )]
-    fuzzy: bool,
+    fuzzy: Option<u32>,
 
     //look for file extension
     #[arg(
@@ -82,7 +84,7 @@ fn children(
     path: &Path,
     target: &Path,
     hidden: bool,
-    fuzzy: bool,
+    fuzzy: Option<u32>,
     results: &mut Vec<(u32, usize, String)>,
 ) {
     for file in WalkDir::new(path).skip_hidden(!hidden) {
@@ -91,7 +93,7 @@ fn children(
                 let line = &string.path().display().to_string();
                 let files: Vec<&str> = line.split("/").collect();
                 let f = files.last().unwrap();
-                if fuzzy {
+                if fuzzy.is_some() {
                     //call fuzzy with target and current filename
                     let lcs = lcs(&target.display().to_string(), f);
                     //add tuple of (lcs, path) to results vec
@@ -114,7 +116,7 @@ fn extensions(path: &std::path::PathBuf, ext: &str, hidden: bool) {
                 let line = &string.path().display().to_string();
                 let files: Vec<&str> = line.split("/").collect();
                 let f = files.last().unwrap();
-                let extension = &f.split('.').last();
+                let extension = &f.split('.').next_back();
                 match extension {
                     Some(extension) => {
                         if extension.eq(&ext) {
@@ -141,11 +143,11 @@ fn main() {
                 }
                 None => {
                     children(&args.path, &file, args.hidden, args.fuzzy, &mut results);
-                    if args.fuzzy {
+                    if let Some(n) = args.fuzzy {
                         //sort results by first param in tuple
                         results.sort_by_key(|k| (!k.0, k.1));
                         //print top n (10 for now) results
-                        for res in results.iter().take(10) {
+                        for res in results.iter().take(n as usize) {
                             println!("{}", res.2);
                         }
                     }
