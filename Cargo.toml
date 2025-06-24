@@ -9,6 +9,7 @@ license = "MIT"
 readme = "README.md"
 keywords = ["cli", "find"]
 categories = ["command-line-utilities"]
+edition = "2024"
 
 [dependencies]
 clap = { version = "4.0.32", features = ["derive"] }
