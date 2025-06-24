@@ -29,9 +29,10 @@ struct Find {
 
     //do a fuzzy find
     #[arg(
+        short,
         long,
         value_name = "FUZZY",
-        help = "do a fuzzy find. the ten closest results will be displayed",
+        help = "do a fuzzy find. pass a value to choose how many results are displayed, or default is 10",
         num_args(0..=1),
         default_missing_value = "10"
     )]
@@ -42,7 +43,7 @@ struct Find {
         short,
         long,
         value_name = "EXTENSION",
-        help = "search for all files with a given extension.\nenter file extension without the '.', for example a plain text file as 'txt'"
+        help = "search for all files with a given extension"
     )]
     extension: Option<String>,
 
@@ -50,10 +51,10 @@ struct Find {
     #[arg(
         short,
         long,
-        value_name = "FILE",
+        value_name = "NAME",
         help = "search for files or directories with given name"
     )]
-    file: Option<std::path::PathBuf>,
+    name: Option<std::path::PathBuf>,
 
     //path to look within
     path: std::path::PathBuf,
@@ -134,15 +135,15 @@ fn extensions(path: &std::path::PathBuf, ext: &str, hidden: bool) {
 fn main() {
     let args = Find::parse();
     let mut results: Vec<(u32, usize, String)> = Vec::new();
-    match args.file {
+    match args.name {
         //verify that extension is None, if it is also Some then return error
-        Some(file) => {
+        Some(name) => {
             match args.extension {
                 Some(_) => {
                     panic!("both file and extension provided, please provide one but not both")
                 }
                 None => {
-                    children(&args.path, &file, args.hidden, args.fuzzy, &mut results);
+                    children(&args.path, &name, args.hidden, args.fuzzy, &mut results);
                     if let Some(n) = args.fuzzy {
                         //sort results by first param in tuple
                         results.sort_by_key(|k| (!k.0, k.1));
