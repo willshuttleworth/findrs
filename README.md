@@ -22,5 +22,5 @@ like GNU `find`, but faster and simpler
 
 ### performance vs GNU `find`
 
+finding all files that have a `.rs` extension
 ![](img/benchmark.png)
-![](img/benchmark2.png)
